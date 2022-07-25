@@ -400,33 +400,12 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  /* function getRepeatEl(arrPathes, index) {
-    let k = index;
-    let result = arrPathes[0].slice(0, k);
-    const arr = [];
-    for (let i = 0; i < arrPathes.length; i += 1) {
-      k += i;
-      if (arrPathes[i].includes(result)) {
-        arr.push(arrPathes[i].includes(result));
-        result = arrPathes[0].slice(0, k);
-      }
-    }
-    const arrLength = arr.filter((item) => item === true).length;
-    console.log(arrLength, result);
-    if (arrLength === arrPathes.length) {
-      return getRepeatEl(arrPathes, k);
-    }
-    return result;
-  }
-
-  const a = getRepeatEl(pathes, 1);
-  const b = a.split('/');
-  const lengthLastEl = b[b.length - 1].length;
-  const count = a.length - lengthLastEl;
-  console.log(a, a.slice(0, count), count);
-  return a.slice(0, count); */
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = pathes.map((path) => path.split('/'));
+  const group = arr[0].map((item, index) => arr.map((part) => part[index]));
+  const equalItems = group.filter((item) => item.every((p) => p === item[0]));
+  const noRepeatItem = [...new Set(equalItems.flat())];
+  return equalItems.length ? `${noRepeatItem.join('/')}/` : '';
 }
 
 
